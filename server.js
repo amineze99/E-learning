@@ -4365,25 +4365,42 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Server Lifecycle Management
-// Server Lifecycle Management
-// -------------------------------------------------------------
-// SERVER STARTUP (Clean & Foolproof)
-// -------------------------------------------------------------
-if (require.main === module) {
-  // التأكد من عدم فتح السيرفر مرتين أبداً
-  const server = app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 EDUMIND Server listening on port ${PORT}`);
-  });
+// تعريف دالة التشغيل المحمية
+let serverInstance = null;
+let isStarting = false;
 
-  server.on('error', (err) => {
-    if (err.code === 'EADDRINUSE') {
-      console.error(`⚠️ Port ${PORT} is already in use, skipping...`);
-    } else {
-      console.error('Server error:', err);
+function startServer(port = PORT) {
+  return new Promise((resolve, reject) => {
+    if (serverInstance && serverInstance.listening) {
+      return resolve({ server: serverInstance, port });
     }
+    if (isStarting) {
+      return resolve({ server: serverInstance, port });
+    }
+    isStarting = true;
+
+    serverInstance = app.listen(port, '0.0.0.0', () => {
+      isStarting = false;
+      console.log(`🚀 EDUMIND Server listening on port ${port}`);
+      resolve({ server: serverInstance, port });
+    });
+
+    serverInstance.on('error', (err) => {
+      isStarting = false;
+      reject(err);
+    });
   });
 }
+
+// استدعاء الدالة عند تشغيل الملف مباشرة
+if (require.main === module) {
+  startServer(PORT).catch((err) => {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  });
+}
+
+module.exports = { app, startServer, DB, PORT };
 
 module.exports = { app, DB, PORT };
 
@@ -4432,9 +4449,7 @@ if (require.main === module) {
 }
 
 
-if (require.main === module) {
-  startServer(PORT);
-}
+
 
 module.exports = { app, startServer, stopServer, DB, PORT };
 
