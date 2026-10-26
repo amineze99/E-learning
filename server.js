@@ -4367,33 +4367,25 @@ app.get('*', (req, res) => {
 
 // Server Lifecycle Management
 // Server Lifecycle Management
-let serverInstance = null;
-let isStarting = false; // متغير حماية لمنع التكرار
+// -------------------------------------------------------------
+// SERVER STARTUP (Clean & Foolproof)
+// -------------------------------------------------------------
+if (require.main === module) {
+  // التأكد من عدم فتح السيرفر مرتين أبداً
+  const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 EDUMIND Server listening on port ${PORT}`);
+  });
 
-function startServer(port = PORT) {
-  return new Promise((resolve, reject) => {
-    if (serverInstance && serverInstance.listening) {
-      return resolve({ server: serverInstance, port });
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`⚠️ Port ${PORT} is already in use, skipping...`);
+    } else {
+      console.error('Server error:', err);
     }
-    
-    if (isStarting) {
-      return resolve({ server: serverInstance, port });
-    }
-    
-    isStarting = true;
-
-    serverInstance = app.listen(port, '0.0.0.0', () => {
-      isStarting = false;
-      console.log(`🚀 EDUMIND Server listening on port ${port}`);
-      resolve({ server: serverInstance, port });
-    });
-
-    serverInstance.on('error', (err) => {
-      isStarting = false;
-      reject(err);
-    });
   });
 }
+
+module.exports = { app, DB, PORT };
 
 function stopServer() {
   return new Promise((resolve) => {
