@@ -4368,13 +4368,14 @@ app.get('*', (req, res) => {
 // Server Lifecycle Management
 let serverInstance = null;
 
+
 function startServer(port = PORT) {
   return new Promise((resolve, reject) => {
     if (serverInstance && serverInstance.listening) {
       return resolve({ server: serverInstance, port });
     }
-    serverInstance = app.listen(port, () => {
-      console.log(`🚀 EDUMIND Server listening on http://localhost:${port}`);
+    serverInstance = app.listen(port, '0.0.0.0', () => {
+      console.log(`🚀 EDUMIND Server listening on port ${port}`);
       resolve({ server: serverInstance, port });
     });
     serverInstance.on('error', (err) => {
@@ -4428,11 +4429,9 @@ if (require.main === module) {
 }
 
 
-// في نهاية ملف server.js تماماً، اجعلها هكذا:
 if (require.main === module) {
   startServer(PORT);
 }
-
 
 module.exports = { app, startServer, stopServer, DB, PORT };
 
