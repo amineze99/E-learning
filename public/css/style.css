@@ -927,10 +927,15 @@ body.sidebar-collapsed .btn-sidebar-toggle i {
 
 /* Responsive Mobile Drawer */
 @media (max-width: 900px) {
+  .sidebar-backdrop {
+    z-index: 9998 !important;
+  }
+
   .sidebar {
     transform: translateX(-100%);
     box-shadow: 4px 0 30px rgba(0, 0, 0, 0.45);
     width: var(--sidebar-width) !important;
+    z-index: 9999 !important;
   }
 
   body.rtl .sidebar {
@@ -6624,4 +6629,300 @@ body.entrance-kiosk-active #attendanceEntranceView {
   background-color: #10b981;
   border-radius: 50%;
   animation: scannerPulse 1.8s infinite;
+}
+
+/* ==========================================================================
+   EDUMIND MOBILE & SMARTPHONE RESPONSIVE ENGINE (DIRECTOR & MOBILE VIEW)
+   Optimized for seamless phone and tablet experience without rewriting code
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* 1. Global Viewport & Container Settings */
+  html, body {
+    overflow-x: hidden !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .main-wrapper {
+    padding-bottom: 50px !important;
+    overflow-x: hidden !important;
+  }
+
+  .view-container {
+    padding: 12px 10px 40px 10px !important;
+  }
+
+  /* 2. Top Header Optimization for Mobile */
+  .top-header {
+    height: auto !important;
+    min-height: 56px !important;
+    padding: 8px 12px !important;
+    gap: 8px !important;
+  }
+
+  .header-left {
+    gap: 10px !important;
+  }
+
+  .btn-sidebar-toggle {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 10px !important;
+    font-size: 18px !important;
+  }
+
+  .header-greeting h1 {
+    font-size: 15px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 150px !important;
+  }
+
+  .header-date {
+    display: none !important; /* Hide long date on phone screens to save space */
+  }
+
+  .badge-year {
+    display: none !important; /* Hide school year badge on phone screens */
+  }
+
+  .header-actions {
+    gap: 8px !important;
+    margin-left: auto !important;
+  }
+
+  body.rtl .header-actions {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+
+  .btn-logout-header {
+    padding: 8px 10px !important;
+  }
+
+  .btn-logout-header span {
+    display: none !important; /* Show only logout icon on mobile */
+  }
+
+  .btn-lang {
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+  }
+
+  /* 3. Dashboard KPIs & Stat Cards */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .stat-card {
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+  }
+
+  .stat-title {
+    font-size: 11px !important;
+  }
+
+  .stat-value {
+    font-size: 19px !important;
+  }
+
+  .stat-icon-badge {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 14px !important;
+  }
+
+  /* 4. Analytics & Charts */
+  .analytics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .chart-wrapper {
+    height: 210px !important;
+  }
+
+  .card {
+    padding: 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .card-header {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* 5. Headers & Action Bars (Schoolaris Style) */
+  .schoolaris-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .schoolaris-header > div {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .schoolaris-header .btn-primary,
+  .schoolaris-header .btn-secondary {
+    flex: 1 1 calc(50% - 4px) !important;
+    justify-content: center !important;
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+  }
+
+  .schoolaris-title {
+    font-size: 20px !important;
+  }
+
+  /* 6. Filter & Search Bars */
+  .schoolaris-filter-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 12px !important;
+  }
+
+  .schoolaris-search-box {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .schoolaris-select {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .schoolaris-filter-bar > div:last-child {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+  }
+
+  .schoolaris-filter-bar > div:last-child button {
+    flex: 1 !important;
+    justify-content: center !important;
+  }
+
+  /* 7. Responsive Tables with Smooth Touch-Scroll */
+  .table-responsive {
+    display: block !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 10px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .schoolaris-table,
+  .data-table,
+  table {
+    min-width: 620px !important; /* Preserves column integrity while scrolling smoothly */
+  }
+
+  /* 8. Financial / Caisse View */
+  #view-caisse .card-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  #view-caisse .card-header > div {
+    width: 100% !important;
+  }
+
+  #view-caisse .card-header button {
+    flex: 1 !important;
+    justify-content: center !important;
+  }
+
+  #view-caisse .stats-grid,
+  .stats-grid[style*="repeat(3, 1fr)"] {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* 9. Bottom-Sheet Modals for Smartphones */
+  .modal-overlay {
+    padding: 0 !important;
+    align-items: flex-end !important; /* Pops up from bottom like a native mobile app */
+  }
+
+  .modal-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 88vh !important;
+    padding: 20px 16px !important;
+    border-radius: 20px 20px 0 0 !important;
+    margin: 0 !important;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse !important;
+    gap: 8px !important;
+    padding-top: 14px !important;
+  }
+
+  .modal-footer button {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+  }
+
+  /* 10. Login Screen for Mobile */
+  .login-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px !important;
+  }
+
+  .login-card {
+    padding: 24px 18px !important;
+    border-radius: 16px !important;
+  }
+
+  .login-title {
+    font-size: 22px !important;
+  }
+
+  /* 11. Hide Desktop-Only Hardware Badges on Mobile */
+  .scanner-ready-badge,
+  .btn-print-thermal,
+  .douchette-panel {
+    display: none !important;
+  }
+}
+
+/* Extra Small Phones (<= 420px) */
+@media (max-width: 420px) {
+  .header-greeting h1 {
+    display: none !important; /* Clean minimal header on very compact devices */
+  }
+
+  .schoolaris-header .btn-primary,
+  .schoolaris-header .btn-secondary {
+    flex: 1 1 100% !important; /* Stack action buttons vertically */
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important; /* Single column stats on micro screens */
+  }
 }
