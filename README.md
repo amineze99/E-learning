@@ -1,1 +1,2 @@
-# E-learning
+# EDUMIND
+Système de Gestion Scolaire & Cours de Soutien
