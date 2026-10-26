@@ -4366,19 +4366,30 @@ app.get('*', (req, res) => {
 });
 
 // Server Lifecycle Management
+// Server Lifecycle Management
 let serverInstance = null;
-
+let isStarting = false; // متغير حماية لمنع التكرار
 
 function startServer(port = PORT) {
   return new Promise((resolve, reject) => {
     if (serverInstance && serverInstance.listening) {
       return resolve({ server: serverInstance, port });
     }
+    
+    if (isStarting) {
+      return resolve({ server: serverInstance, port });
+    }
+    
+    isStarting = true;
+
     serverInstance = app.listen(port, '0.0.0.0', () => {
+      isStarting = false;
       console.log(`🚀 EDUMIND Server listening on port ${port}`);
       resolve({ server: serverInstance, port });
     });
+
     serverInstance.on('error', (err) => {
+      isStarting = false;
       reject(err);
     });
   });
