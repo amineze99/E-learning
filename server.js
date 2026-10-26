@@ -4428,9 +4428,10 @@ if (require.main === module) {
 }
 
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 EDUMIND Server listening on port ${PORT}`);
-});
+// في نهاية ملف server.js تماماً، اجعلها هكذا:
+if (require.main === module) {
+  startServer(PORT);
+}
 
 
 module.exports = { app, startServer, stopServer, DB, PORT };
