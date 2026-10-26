@@ -6,6 +6,11 @@ const os = require('os');
 // DATA ISOLATION (AppData / Local Data Store)
 // ==========================================================================
 function getDataDirectory() {
+  // إذا كنا على منصة Fly.io أو في بيئة الإنتاج، نستخدم القرص الدائم مباشرة
+  if (process.env.FLY_APP_NAME || process.env.NODE_ENV === 'production') {
+    return '/data';
+  }
+
   if (process.env.EDUMIND_DATA_DIR) {
     return path.resolve(process.env.EDUMIND_DATA_DIR);
   }
@@ -16,6 +21,7 @@ function getDataDirectory() {
   );
   return path.join(base, 'EDUMIND', 'data');
 }
+
 
 function getBackupDirectory() {
   const backupDir = path.join(getDataDirectory(), 'backups');
