@@ -6,9 +6,7 @@ const os = require('os');
 const DB = require('./database');
 
 const app = express();
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
@@ -4428,6 +4426,12 @@ if (require.main === module) {
     console.error('❌ Failed to start EDUMIND Server:', err.message);
   });
 }
+
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 EDUMIND Server listening on port ${PORT}`);
+});
+
 
 module.exports = { app, startServer, stopServer, DB, PORT };
 
